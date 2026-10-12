@@ -1,0 +1,9 @@
+.................................                                        [100%]
+=============================== warnings summary ===============================
+tests/test_adaptation.py::test_real_lora_gradient_save_and_resume_without_pretrained_download
+  /home/fred/ai-base/Sage-AGI_finale/sage_colab/.validation-env/lib/python3.10/site-packages/peft/utils/save_and_load.py:286: UserWarning: Could not find a config file in  - will assume that the vocabulary was not modified.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: /home/fred/ai-base/Sage-AGI_finale/sage_colab/validation/pytest.xml -
+33 passed, 1 warning in 156.92s (0:02:36)

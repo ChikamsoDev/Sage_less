@@ -1,0 +1,9 @@
+{
+  "nbformat_valid": true,
+  "all_cells_compile": true,
+  "all_embedded_python_compiles": true,
+  "embedded_archive_sha256": "717ed51009905ed3feee4988fb223fed1f790e273ddb77a79ab89f45161b1e08",
+  "archive_matches_source_zip": true,
+  "no_model_weights": true,
+  "source_file_count": 44
+}

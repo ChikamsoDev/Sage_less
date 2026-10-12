@@ -1,0 +1,26 @@
+{
+  "status": "trained",
+  "steps_this_call": 120,
+  "bootstrap_steps": 120,
+  "weights_changed": true,
+  "parameter_hash": "78c911b54c33040f309f195d1c942eb4f2ef250c09c55ca0428fba46e6938968",
+  "parameter_count": 135799,
+  "first_loss": 3.0989532470703125,
+  "last_loss": 0.5843362808227539,
+  "seconds": 3.684326687999942,
+  "training_records": 2160,
+  "training_data_hash": "9af9a633e731f12cea9916d1dda3339d7d2346caf002556fd0df36d2c9ac275b",
+  "checkpoint": ".validation-state-v2/learning/bootstrap-000120-78c911b54c33.pt",
+  "trained_components": [
+    "GRU history",
+    "action projection",
+    "world ensemble",
+    "policy value",
+    "compute controller"
+  ],
+  "not_trained": [
+    "LLM backbone/adapters",
+    "visual perception",
+    "general-purpose causal reasoning"
+  ]
+}

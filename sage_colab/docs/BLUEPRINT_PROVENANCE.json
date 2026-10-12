@@ -1,0 +1,153 @@
+{
+  "source": "SAGE_AGI_ASI_Blueprint.docx",
+  "sha256": "64e8eaec1a9d7ae6030090a5ee3533e2e14b08fb6538684f217b75a9f8e6116e",
+  "paragraphs": 617,
+  "text_characters": 81206,
+  "read_parts": [
+    "document",
+    "footnotes",
+    "header1",
+    "footer1"
+  ],
+  "diagram": "BLUEPRINT_ARCHITECTURE.png",
+  "links": [
+    {
+      "Id": "rId93",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://arxiv.org/abs/2301.04104",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId88",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://arxiv.org/abs/2311.02462",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId99",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://arxiv.org/abs/2501.00663",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId91",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://arxiv.org/abs/2501.12948",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId103",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://arxiv.org/abs/2505.22954",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId95",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://arxiv.org/abs/2506.09985",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId89",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/measuring-agi-cognitive-framework/",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId101",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId108",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://deepmind.google/blog/enabling-continual-learning-in-neural-networks/",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId97",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId96",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://deepmind.google/blog/sima-2-an-agent-that-plays-reasons-and-learns-with-you-in-virtual-3d-worlds/",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId92",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://deepmind.google/research/alphazero-and-muzero/",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId90",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://openai.com/index/learning-to-reason-with-llms/",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId106",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://openai.com/index/weak-to-strong-generalization/",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId94",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://openreview.net/pdf?id=BZ5a1r-kVsf",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId107",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5380101/",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId98",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://research.google/pubs/titans-learning-to-memorize-at-test-time/",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId110",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://research.nvidia.com/labs/cosmos-lab/",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId102",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://sakana.ai/dgm/",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId100",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://storage.googleapis.com/deepmind-media/Era-of-Experience%20/The%20Era%20of%20Experience%20Paper.pdf",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId104",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId105",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://www.anthropic.com/research/reasoning-models-dont-say-think",
+      "TargetMode": "External"
+    },
+    {
+      "Id": "rId109",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+      "Target": "https://www.nvidia.com/en-us/ai/cosmos/",
+      "TargetMode": "External"
+    }
+  ]
+}

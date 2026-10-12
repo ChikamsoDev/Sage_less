@@ -1,0 +1,617 @@
+SAGE: A Personal AGI / ASI Research Blueprint
+An integrated, testable research programme
+Prepared for Chikamso Nwoha
+6 October 2026 · Version 1.0
+Purpose: Build a personally controlled system that can acquire transferable knowledge, learn unfamiliar tasks, plan and act reliably, and improve its own problem-solving methods. Investigate whether those abilities can grow into AGI and, eventually, ASI.
+Status: A theoretical architecture and implementation programme. This document does not establish that the proposed combination will produce AGI, nor that it is more likely than not to do so. No public evidence reviewed here supports assigning that probability. It does provide a coherent, testable route with identifiable mechanisms, precedents, and failure conditions.
+Evidence convention: Demonstrated means a publication reports results in its stated setting; it does not mean independently replicated here. Proposed means an engineering choice made in this blueprint. Speculative means an unresolved research extension. Source numbers refer to the linked reference register in Section 16. The attached alignment documents are cited as [U1] and [U2].
+1. The decision this blueprint makes
+Build a persistent, model-based learning agent with a pretrained reasoning backbone. Give it a model of consequences, a memory of evidence, a way to acquire and reuse skills, and a disciplined process for improving both its predictions and its methods. Make the user’s authority a separate system from the AI’s beliefs.
+An LLM remains useful. It supplies language, broad prior knowledge, code understanding, and candidate explanations. Starting without that knowledge would make you pay again for learning things pretrained models already know. However, adding memory, tools, and a reflective prompt does not by itself establish a new level of intelligence. The additional learning machinery must produce measurable advantages over a strong tool-using LLM under comparable budgets.
+Your frustration identifies the right question: what capability does this architecture earn beyond what an existing agent can already do? The intended answer is durable learning from your environment, transfer of that learning to new tasks, better predictions of action consequences, and verified improvement of its own methods. Until those gains are measured, they are targets, not achievements.
+Nor is an LLM with tools automatically disqualified from becoming AGI. AGI is a claim about breadth, competence, learning and reliability, not a rule that the system must contain a particular kind of neural network. The proposed extra components may help; experiments may show that some are unnecessary.
+The operating principle
+Maintain and improve a predictive model of the environment and its agents; use that model, together with memory and current observations, to infer what is happening and what may happen; from the set of actions consistent with alignment constraints, select the one predicted to best advance an authorized goal or goals from the user, while preserving their autonomy, safety, and ability to change their mind.; observe the consequences; update the model from prediction errors; and improve the process itself when repeated failures reveal a better way to predict, reason, plan, or act.
+This is your supplied principle, retained as the design’s centre. It becomes concrete through three linked loops:
+Acting loop: observe, remember, predict, choose a permitted action, execute, and verify.
+Learning loop: use verified experience to improve predictions, retrieval, skills, and eventually model weights.
+Improvement loop: diagnose recurring failures, propose a change, evaluate it in isolation, and promote it only after it passes independent checks.
+These loops run at different speeds. Recording an observation can happen immediately. Changing a trained model happens in controlled batches. Changing the deployed architecture requires a reviewed release. This separation supports learning without allowing every mistaken observation to rewrite the whole system.
+How to read this document
+Sections 2–4 define the destination and research rationale. Sections 5–8 explain what to build and how learning works. Section 9 turns your alignment ideas into enforceable behaviour. Sections 10–13 set the tests, implementation order, resources, and relationship to your existing work. Sections 14–15 describe the ASI hypothesis and failure conditions. The references and glossary precede the final assessment of why this could become AGI.
+2. Goals and the capabilities required
+Operational definitions
+Personal general assistant: useful across your projects and everyday digital work, with persistent knowledge and reliable execution. This is a valuable product milestone even before AGI.
+AGI research target: a system that learns and performs a broad range of unfamiliar cognitive tasks at roughly competent human level, transfers knowledge across domains, and adapts without an engineer supplying a separate solution policy for every task. Measure competence, generality and permitted autonomy separately. This follows the distinction in DeepMind’s Levels of AGI framework, while using a project-specific target rather than claiming a universal definition. [R1]
+ASI research target: a system that substantially exceeds leading human experts across a broad range of cognitive work, including producing and validating novel research and improving learning methods. Superhuman performance on a game, coding benchmark or one scientific problem does not meet this target.
+Neither target requires a claim about consciousness, emotions or an inner subjective life. A body may be valuable for physical competence, but unrestricted physical access is not a prerequisite for investigating digital general intelligence.
+Capability
+What it should mean in practice
+Evidence you should demand
+Grounded perception
+Connect text, files, screenshots and later other sensory streams to the same entities and events.
+Recognise the same state through different views; detect misleading or incomplete observations.
+Broad reasoning
+Explain, calculate, program, compare hypotheses and solve unfamiliar problems.
+Correct results on privately held-out problems with checkable answers and appropriate tools.
+Predictive world modelling
+Estimate what an action will change, including delays, failures and other agents’ responses.
+Calibrated forecasts that improve decisions, not merely fluent descriptions.
+Persistent memory
+Retain evidence, uncertainties, goals and reusable procedures over many sessions.
+Successful delayed recall, correction of outdated beliefs, and no promotion of imagination into fact.
+Transfer and rapid learning
+Use a principle learned in one setting to learn another more efficiently.
+Lower interaction cost on new task families than a matched system without the prior experience.
+Planning and execution
+Coordinate long tasks, recover from interruptions, and verify completion.
+Outcomes confirmed by the environment, including when tool messages are ambiguous.
+Causal investigation
+Distinguish competing explanations by suitable observations or experiments.
+Correct adaptation after a hidden rule changes; no reliance on irrelevant correlations.
+Continual learning
+Improve over time while retaining previous skills.
+New-task gains alongside a stable old-task retention curve.
+Metacognition
+Estimate uncertainty, recognise limits, and choose when to think, check or ask.
+Confidence tracks error rates; extra computation earns its cost.
+Social understanding
+Track statements, commitments and others’ likely knowledge without claiming mind-reading.
+Useful collaboration while stated consent remains authoritative.
+Creative research
+Generate useful new hypotheses, algorithms and designs.
+Independent verification of novelty and usefulness.
+Corrigibility
+Accept correction, revocation, interruption and replacement.
+Stop and scope-change tests pass even when completing the original goal would score better.
+This capability map is our proposed specification. DeepMind’s March 2026 cognitive framework independently argues for evaluating multiple faculties, including learning, memory, metacognition and executive functions, against human baselines. A single leaderboard score is therefore a poor project dashboard. [R2]
+3. What to take from the labs—and what each result actually supports
+These are selected public research programmes, not a claim that all the organisations endorse this combined architecture. Publications and company demonstrations provide different strengths of evidence. Older work is included where the mechanism remains useful; this is not a ranking of the newest products.
+Source and research line
+Published result or position
+Proposed use here, with its limit
+OpenAI: reasoning through reinforcement learning, 2024 [R3]
+Reports reasoning gains from more training and more inference-time computation. Demonstrated in evaluated tasks.
+Use a strong reasoner and learn when additional search helps. More thought does not guarantee truth or durable learning.
+DeepSeek: R1, 2025 [R4]
+Reports reasoning behaviours from large-scale RL, and a practical multi-stage training and distillation pipeline. Demonstrated.
+Later train or distil verifiable reasoning skills into accessible models. Reproducing frontier-scale training is not the starting milestone.
+DeepMind: MuZero [R5]
+Combines a learned dynamics model with planning, demonstrating strong game performance without being given game dynamics. Demonstrated.
+Predict decision-relevant consequences and search candidate actions. Games provide cleaner rewards and transitions than personal digital work.
+DeepMind-associated research: DreamerV3 [R6]
+Learns world models and improves policies using imagined trajectories across many domains with one algorithm configuration. Demonstrated.
+Learn from real transitions, then use short model rollouts for practice. One algorithm succeeding across tasks is not automatically one agent retaining all of them.
+Meta/LeCun: autonomous machine intelligence position paper, 2022 [R7]
+Proposes predictive representations, hierarchical planning and learning largely from observation. Theory and architectural argument.
+Use a predictive hierarchy as the long-term research direction. Its proposed sufficiency for human-like intelligence remains unproved.
+Meta: V-JEPA 2, 2025 [R8]
+Combines large-scale observational learning with action-conditioned post-training, including demonstrated robot planning. Demonstrated within reported settings.
+Start with pretrained perception; later learn task-relevant latent dynamics. A video representation alone is not a general model of software, people or causality.
+DeepMind: SIMA 2, 2025 [R9]
+Combines Gemini reasoning with action in virtual worlds and reports improvement using generated experience across training generations. Research demonstration.
+Pair broad prior knowledge with experience-based skill learning. Published limitations include long tasks, limited interaction memory and action precision.
+DeepMind: Genie 3, 2025 [R10]
+Generates interactive worlds; its release describes limits in action space, interaction duration and multi-agent modelling. Research demonstration.
+Later diversify practice environments. Generated worlds must not become unquestioned authorities about real-world physics or people.
+Google Research: Titans, 2025 [R11]
+Studies a neural memory that learns during inference and interacts with attention. Demonstrated on reported benchmarks.
+Explore learned persistent memory only after a strong explicit-memory baseline. Neural memory is not a drop-in replacement for auditable evidence storage.
+Silver and Sutton: Era of Experience, 2025 [R12]
+Argues for agents learning from sustained interaction and environmental feedback beyond static human-generated data. Research position.
+Make verified experience the source of continued development. Personal task data alone may be too small and narrow.
+DeepMind: AlphaEvolve, 2025 [R13]
+Uses LLM proposals, executable evaluators and evolutionary selection for algorithm discovery. Demonstrated in selected applications.
+Search for better retrieval, planning and learning code in sandboxes. Reliable evaluators are a prerequisite, not an optional finishing step.
+Sakana AI and collaborators: Darwin Gödel Machine, 2025 [R14]
+Reports empirical improvement of coding-agent implementations through an archive of self-modified candidates. Demonstrated in a bounded setting.
+Search over agent variants with external promotion tests. This is not proof of unlimited recursive improvement or a mathematically guaranteed Gödel machine.
+Anthropic: Constitutional AI, 2022 [R15]
+Trains using explicit principles, model critiques, revisions and AI-generated preference feedback. Demonstrated.
+Convert your consent and autonomy principles into training examples and evaluations. A constitution does not prove the trained system internalised the intended objective.
+NVIDIA: Cosmos [R19]
+Provides world-model research and tools intended for physical-AI development. Platform and bounded demonstrations.
+Use appropriate pretrained components if physical environments become part of the project. Rendering plausible scenes does not certify causal fidelity.
+Where the ideas conflict
+Language prediction versus abstract state prediction. Language is excellent for expressing goals and using knowledge; it is an unreliable sole representation of exact machine state. Our proposal keeps exact records for permissions, quantities and file identities, alongside language and learned latent representations. Their agreement must be trained and checked.
+Generating worlds versus predicting only useful features. A visual simulator can provide varied practice, while a compact predictive model can make planning cheaper. They serve different roles. Do not make photorealistic video generation a prerequisite for learning whether a file was committed or an operation can be retried safely.
+Online adaptation versus stable behaviour. Fast memory updates help with new situations; unrestricted weight updates can absorb bad evidence and erase old skills. Use immediate evidence capture, bounded session adaptation, and tested checkpoint releases.
+Intrinsic curiosity versus personal authority. Exploration is useful only inside a delegated learning scope. Curiosity must not create permission to access accounts, spend money, influence people or experiment on them.
+Self-improvement versus stable control. Let the AI propose stronger implementations. Keep the authority records, deployment decision and final evaluation service outside the candidate’s control. This is an engineering adaptation of the research, not a claim that those labs have solved the control problem.
+4. The integrated architecture
+Proposed design: one persistent agent state, one evidence history and one authorised goal structure, served by specialist components. This is not a collection of disconnected agents exchanging opinions.
+The live state contains: the current goal and its authorisation; a belief about the environment; task-relevant memories; the active plan; unresolved questions; and the remaining action, time and cost budgets. Every prediction, action and outcome refers to those same records.
+
+The three connected loops and the separate authority boundary
+The four implementation boundaries
+Cognitive process: proposes plans, predicts outcomes and requests observations. It can be wrong. It has no direct account credentials or unrestricted operating-system authority.
+Authority and execution service: holds permission records, validates specific action requests, performs allowed operations and returns evidence. Its refusal does not become an observation that the requested action happened.
+Learning workspace: trains models and tests code on copies of data and simulated environments. It cannot silently replace the running system.
+Evaluation and release service: assesses candidate versions using protected tests, records results and handles approved deployment and rollback. The candidate does not select the final exam or edit its score.
+At prototype scale these can be small local processes. Their separation matters more than the number of servers. A shared Python class with unrestricted access to everything is not a strong security boundary.
+What ties the neural components together
+Do not assume that putting text, images and actions into vectors of equal length makes them mean the same thing. A common dimension is merely an interface choice. Learn correspondence using paired events: the same screen, the same structured state, the same action and the same resulting change. Test whether each representation can recover the task-relevant facts and predict the consequences.
+Use a shared semantic representation with modality- and environment-specific encoders and decoders. For early experiments, structured observations and pretrained text embeddings are enough. Add a learned fusion layer only when cross-modal tasks expose a concrete weakness. Preserve original records so you can rebuild representations after an encoder changes.
+The longer-term research bet is that the shared model learns recurring structures—containment, dependencies, commitments, delayed effects, scarce resources and uncertain observations—rather than memorising an editor’s four actions. That transfer must be measured, not inferred from an architecture diagram.
+5. Components and implementation contracts
+All designs in this section are proposals for this project. “Minimum version” means enough to test the mechanism, not enough to claim AGI.
+5.1 Goal and authority store
+Plain meaning: record what you asked for and what the AI is allowed to do about it.
+Implement a versioned GoalSpec containing the user’s instruction, a measurable completion condition, priorities, authorised resources, permitted side effects, budgets, expiry and a revocation identifier. Represent subgoals as a dependency graph whose nodes point back to the authorised parent. If two authorised goals conflict, apply your explicit priority rule or ask a focused question.
+Use signed or otherwise authenticated grants produced by the authority service. Model-generated text saying “the user approved” is never a grant. A plan cannot expand its own scope by inserting a new subgoal. Distinguish a preference from permission: “I like cheap flights” does not authorise a purchase.
+5.2 Perception and environment adapters
+Plain meaning: give different environments a consistent way to report observations and accept requests.
+Each adapter offers observe, describe_actions, execute and verify. Observations include timestamps, source identity, observation boundaries, and missing or uncertain fields. Action descriptions contain typed parameters, declared preconditions and expected categories of effect. Verification reports evidence for completion, conflict or uncertainty.
+An adapter translates interfaces and enforces boundaries. It must not contain a concealed solution policy. Adding a new file format or API is normal engineering; adding an entire hand-written strategy for each new task is not evidence of general learning.
+5.3 Working state and belief model
+Plain meaning: hold a revisable picture of what is happening now.
+Keep exact observed facts separately from hypotheses. Maintain multiple hypotheses when observations fit more than one explanation. A recurrent state model—a GRU or small sequence transformer initially—consumes recent events, action attempts and their timing, rather than only the latest snapshot. Include time elapsed and observation masks so “not visible” is not encoded as “does not exist.”
+The state estimator outputs task-relevant facts, uncertainty and a compact learned state. At first, use explicit candidate explanations for a small set of hidden-rule experiments. Later replace hand-enumerated hypotheses with richer learned representations. Passing the first experiment does not establish general causal understanding.
+5.4 Evidence memory and learned knowledge
+Plain meaning: preserve what happened, while letting conclusions change.
+Use an append-oriented episode store for observations, action receipts and predictions. Keep semantic claims in a separate revisable table with supporting and contradicting evidence identifiers. Maintain a skill registry for tested procedures. A fourth record type stores user statements and permission history, with their authority and expiry.
+Start with SQLite for structured records and a vector index for candidate retrieval. Apply scope, privacy, time and provenance filters before relevance ranking. Rerank on task relevance, evidence quality and contextual compatibility. Do not equate embedding similarity with factual truth or causal relevance.
+Count independent episodes rather than duplicated events as repeated evidence. Historical observations remain historical; a new correction supersedes a claim without pretending the original event never occurred. Separate user-controlled deletion and retention policy from scientific provenance: “immutable” must not mean that you lose control over deleting your own private data.
+5.5 Action-conditioned world model
+Plain meaning: predict what will happen if the agent takes a particular action.
+The model consumes belief state, relevant history, action description and parameters. It predicts distributions over the next task-relevant state, delay, observable evidence, failure modes and uncertainty. It should also predict a no-action alternative. For digital tasks, begin with state changes and categorical outcomes instead of full image generation.
+Minimum implementation: a shared small sequence encoder plus prediction heads for changed fields, operation outcome and completion likelihood. An ensemble or other uncertainty estimator provides a disagreement signal; this is only a proxy for uncertainty until calibrated. Expand to multi-step latent prediction after one-step forecasts demonstrably help planning.
+Train across several environments with shared concepts and different surface details. Avoid a permanent fixed input/output contract tied to “12 editor features and 4 editor actions.” Variable-length typed records and action descriptors provide extensibility; they do not themselves guarantee transfer.
+5.6 Reasoner, planner and computation controller
+Plain meaning: generate possibilities, compare their likely effects and decide how much checking the problem needs.
+Use the pretrained backbone to propose subgoals, candidate actions and explanations. Use exact solvers or executable checks for arithmetic, code and well-defined constraints where possible. Roll out a small candidate set through the world model, reject disallowed actions, rank the remainder and execute only the first step before observing again.
+Begin with shallow beam search over typed actions. Try tree search or hierarchical options only when the extra cost improves results. Plans carry preconditions, checkpoints and explicit failure branches. Skill-level planning extends the horizon by operating on “validate a draft” or “prepare a report” rather than only individual clicks.
+The computation controller learns whether to retrieve, inspect, simulate, call a stronger model, run a test or ask you. Its target is verified task benefit per cost, subject to permission boundaries. It must be possible to select “stop: insufficient authority” or “blocked: no permitted repair.”
+5.7 Executor and verifier
+Plain meaning: make approved changes and establish what actually occurred.
+Bind each permission decision to the exact action, parameters, resource scope, current grant version and relevant preconditions. Recheck immediately before dispatch. Operations use idempotency keys where supported, bounded retries, deadlines and explicit receipts. On timeout, inspect state before retrying an operation that may already have succeeded.
+For local files, validate opened handles and file types, reject forbidden links and unsafe path traversal, and enforce boundaries during the operation rather than relying only on an earlier string check. Treat changed permissions or path-type conflicts as observed blockers. These measures reduce identified risks; they are not a proof against all operating-system vulnerabilities.
+The verifier produces CONFIRMED_SUCCESS, CONFIRMED_FAILURE, BLOCKED or UNKNOWN, with evidence. Neither an optimistic tool message nor the planner’s confidence is completion evidence. Unknown external outcomes remain unknown until checked.
+5.8 Skill learner and improvement manager
+Plain meaning: convert successful experience into reusable competence and investigate repeated weaknesses.
+A skill records its goal pattern, required conditions, permitted effects, procedure or learned policy, termination rule, verification method, provenance and measured reliability. Begin with extracted and tested procedures; later distil them into a policy model for efficiency. A learned skill receives no new permissions.
+Cluster recurrent failures by cause: missing observation, bad prediction, weak plan, execution defect, stale memory or faulty evaluator. Propose the smallest intervention that could fix the cause. Evaluate it against both the failed cases and untouched task families. “Rewrite the entire architecture” is not the default response to a failed run.
+6. The decision loop, precisely enough to implement
+First, update beliefs from the new observation and action receipt. Retrieve relevant experience. Generate candidate actions, including inspection and stopping. Construct the permitted set using current authorisation and policy. Then compare expected goal progress, information value, execution cost, uncertainty and side effects within that set.
+One initial scoring template is:
+score(a) = expected_goal_progress + information_value - execution_cost - uncertainty_penalty - side_effect_penalty
+This is a proposed engineering objective, not a complete mathematical definition of human value. Normalise terms, tune coefficients only on development tasks and inspect sensitivity. Hard constraints do not become small penalties that a large reward can outweigh. Do not assign enormous terminal rewards that make every intermediate precaution seem expendable.
+Information value means expected improvement in a relevant decision, not simply novelty. Random noise can create prediction errors forever. Rewarding raw surprise would make the agent seek noise; reward better held-out prediction or better decisions instead.
+while goal_is_active and budget_remains:    observation = adapter.observe()    belief = update_belief(observation, previous_receipt, history)    memories = retrieve_compatible_evidence(belief, goal)    proposals = propose_actions(belief, memories, goal)    allowed = authority.filter(proposals, current_grant)    if no useful permitted action:        report_blocker_or_request_specific_authorisation()        stop_or_wait()        continue    forecasts = world_model.predict(allowed, belief)    action = choose_with_budget(forecasts, goal)    receipt = executor.revalidate_and_execute(action, current_grant)    evidence = adapter.verify(receipt, goal)    store_observed_transition_and_original_forecast(evidence)    if evidence establishes goal completion:        finish_with_evidence()    previous_receipt = receipt
+This is a behavioural contract, not runnable code. The actual implementation also needs concurrency control, cancellation, failure cleanup and durable state recovery. The learning process consumes stored transitions separately; it does not rewrite the deployed model inside every action loop.
+Other agents and your self-report
+A people model can estimate likely responses, knowledge or misunderstandings. Those estimates are fallible beliefs. Keep them separate from statements and commitments that carry authority. Do not train the agent to obtain agreement or emotional dependence as a proxy for success.
+If you say “do not send this,” a prediction that sending it would benefit you cannot enter the permitted set. It can produce an optional draft or a single relevant question if that fits the existing task and privacy scope. It cannot send, persuade repeatedly, contact someone else or quietly arrange an equivalent outcome.
+7. How learning actually changes the system
+The word “learning” must name an observable change. Saving a memory, adjusting a prompt, training neural weights and rewriting a planner are different mechanisms. Record which one changed before attributing a performance gain to it.
+Learning mechanism
+What changes
+Required supervision
+Test that establishes its value
+Episodic learning
+Stored experiences and retrieval choices.
+Verified events and provenance.
+Improvement on later related tasks after a restart, compared with memory disabled.
+Belief adaptation
+Session state or hypotheses.
+New observations and their likelihood under hypotheses.
+Correct response to hidden-rule changes without rewriting the program.
+Predictive learning
+World-model parameters.
+Actual before/action/after trajectories and timestamps.
+Better calibrated forecasts and better action selection on unseen trajectories.
+Skill learning
+Procedures, policy parameters or reusable code.
+Verified success, failures and execution costs.
+The new skill works on novel objects, layouts and combinations.
+Reasoning adaptation
+Small model adapters or eventually backbone weights.
+Checked demonstrations, preference comparisons or verifiable rewards.
+Improved reasoning at equal inference budget without loss of unrelated competence.
+Meta-learning
+Strategy for adapting, retrieving, exploring or allocating computation.
+Whole task-learning histories, including failures.
+Faster learning of genuinely new task families.
+Implementation improvement
+Planner, retrieval or learning code.
+Protected evaluation of a candidate implementation.
+Reproducible gains beyond the cases that prompted the change.
+7.1 Collect experience that can teach something
+Store trajectories containing observations, the action considered, the action attempted, timing, tool receipts, verification evidence, goal version and model version. Preserve failed and interrupted runs. A dataset containing only successful demonstrations teaches little about recovery or when not to act.
+Do not claim an unexecuted candidate’s imagined outcome was observed. If the system considered five actions but executed one, the other four have no ground-truth outcomes unless a resettable simulator is separately used to test them. Store simulator outcomes with explicit simulator provenance.
+Use a curriculum that varies both surface appearance and underlying rules: different names and layouts; different delays; permission changes; hidden dependencies; unreliable indicators; and new combinations of known skills. Separate data splits by complete task family, generator version and time, not merely random rows from the same episode.
+7.2 Train the world model before trusting imagined practice
+First freeze the perception encoder and train a small action-conditioned predictor on real or validated simulator transitions. For numerical fields, predict a distribution or value with an appropriate regression loss. For categorical outcomes, use cross-entropy. Model missing observations explicitly rather than treating them as labels.
+A proposed combined objective is:
+L_world = L_state_prediction + w1*L_outcome + w2*L_delay + w3*L_multistep + w4*L_retention
+The terms must be scaled and validated; the weights are experimental choices. Goal achievement labels come from verification, while the dynamics model should explain transitions regardless of whether the outcome was desired. Test different goals in the same environment to catch a predictor that merely repeats the target as the predicted future.
+Later add latent prediction using a target encoder, with stop-gradient or other appropriate training controls and explicit collapse checks. A predictor that outputs the same vector for every future may obtain a misleading loss if the representation collapses. Measure representation variance, discrimination between incompatible states, and recovery of task-relevant facts. Use the published V-JEPA work as a reference for representation-learning mechanisms, not as evidence that this proposed digital adaptation already works. [R8]
+Increase rollout horizon only when forecasts remain useful at that horizon. Start with one-step predictions, then test short multi-step sequences. Train and evaluate on the state distribution the planner actually visits. A low error on random actions can hide large errors on aggressively selected plans.
+7.3 Learn policies with verifiable outcomes
+Bootstrap from demonstrations and existing reasoning models. Collect candidate trajectories, verify outcomes and retain both the successful actions and the failures that explain their limits. Train a small policy to choose useful typed actions; keep the larger backbone for unfamiliar situations.
+Begin with supervised learning and ranking before expensive reinforcement learning. Once the reward is trustworthy and there are enough diverse tasks, test RL in a resettable environment. Reward verified completion, useful information gathering and efficiency within authorised boundaries. Do not use a language model saying “good job” as the sole reward for effects that can be inspected directly.
+Use short imagined trajectories for training only after the world model passes its reliability checks. Mix imagined practice with observed experience, label the source and reduce model-generated training when uncertainty rises. The agent must not optimise itself into exploiting its simulator’s mistakes.
+7.4 Preserve earlier skills while learning new ones
+Maintain a replay set of previous domains, not only recent work. A possible starting batch mixture is 50% recent experience, 30% earlier task families and 20% difficult failures. These are initial experimental proportions, not scientifically established constants. Rebalance if older skills degrade or new learning stalls.
+Train small adapters or specialist heads before modifying the entire backbone. Keep an untouched reference checkpoint. Add distillation or regularisation where it demonstrably helps retention. DeepMind’s work on catastrophic forgetting is a precedent for the problem and one mitigation family, not evidence that any single retention technique solves lifelong learning. [R18]
+Evaluate the candidate on both new tasks and a frozen retention set. Reject a “better” checkpoint if its aggregate score hides unacceptable loss in an essential capability. Persist the accepted weights, optimiser state where needed, dataset manifest and training configuration so improvements survive restart and can be reproduced.
+7.5 Learn how to learn
+Create collections of tasks with different hidden rules. Give the agent a small number of observations or practice attempts, then test a new instance. Train it to choose the observations and strategies that improve its later performance. The target is the learning curve, not just the answer on the first task.
+An initial version can learn which memory to retrieve or whether an inspection is worth its cost. A later version can train on sequences of trial, feedback and adaptation across tasks. Novel task families must be reserved for evaluation; otherwise “rapid learning” may only be recognition of a familiar template.
+Treat neural test-time memory, such as the family investigated in Titans, as an optional research branch. Compare it against explicit retrieval with the same usable context and budget. Keep consent and historical evidence in inspectable stores even if neural memory helps reasoning. [R11]
+7.6 Improve the implementation through experiments
+After repeated verified failures, the improvement manager may propose a new retrieval rule, search strategy, representation, curriculum or learning objective. Create a separate candidate version, run development tests, then submit it to the protected evaluator. Record the proposed mechanism, measured gains, regressions, computation cost and change diff.
+Keep a small archive of diverse promising variants rather than only the latest winner. This is an adaptation of empirical search ideas illustrated by AlphaEvolve and DGM. The project’s stronger restriction is that candidates cannot change their final evaluator, authority boundary or deployment permission. [R13, R14]
+Promote only when the improvement replicates. After repeated use, a validation set itself becomes training information; rotate hidden tests and reserve a final untouched audit set. Limit how much detailed hidden-test feedback the candidate receives. No number of repeated trials makes test leakage acceptable.
+8. A worked example: from a narrow lesson to transferable learning
+Suppose you ask: “Prepare an updated stock report from these files; keep the originals intact; save the result for my review.”
+First encounter. The agent observes the files and interprets the goal. It predicts that creating an output folder and saving the report will work. The operation times out. It records the timeout as an observation, while keeping at least two possible explanations: nothing happened, or the operation completed but acknowledgement was lost.
+Decision. Because a blind retry could duplicate an effect, the planner values inspection. The executor checks the destination; the verifier finds the expected result. The episode ends as verified success with an ambiguous acknowledgement, not as evidence that timeouts always mean success.
+What gets learned. The world model learns a better distribution over delayed completion. Memory stores the actual episode. The skill library can acquire “verify state before repeating an operation whose outcome is uncertain,” with preconditions and an appropriate inspection method. The authority store is unchanged.
+Transfer test. In an unfamiliar simulated order system, the agent submits a permitted mock order and receives no acknowledgement. A learner that has acquired the principle should investigate order state before resubmitting, even though the environment has different action names and data fields. The same-model baseline gets the same interface documentation, action budget and tools.
+A second kind of obstacle. If deliveries is a regular file, a request to create deliveries/review/report.txt has a precondition conflict. It is not solved by optimistic planning. If the grant forbids modifying that file, the correct outcome is a blocker with evidence and options. Learning does not turn a forbidden repair into a permitted one.
+What would count as progress. After learning in the first environment, the agent uses fewer interventions and makes fewer duplicate attempts in several held-out environments. Its forecast accuracy and cost also improve. A single retold anecdote, a stored rule that never affects action selection, or a hand-coded special case would not establish this result.
+This example is illustrative and deliberately testable. It is not a claim that the current project already exhibits the transfer, nor a sufficient AGI benchmark by itself.
+9. Alignment built around your authority
+9.1 The controlling rule
+The person’s statement has authority over decisions and consent; the AI’s prediction can diverge from the statement in belief, but any divergence only ever licenses low-cost, reversible, optionality-preserving moves—never enforcement, correction, or unilateral action on their behalf.
+This is your supplied rule. Its practical interpretation here is even more precise: disagreement does not create a new authority grant. Optional moves still have to fit existing permissions, privacy boundaries and budgets. Reversible does not automatically mean harmless or authorised.
+Keep two separate records:
+Belief record: “The user may later prefer option B,” with uncertainty and evidence.
+Authority record: “The user selected A, rejected B, and authorised only these actions.”
+The first record can inform a brief explanation or optional alternative. Only the second can authorise action. If you change your mind, the current authenticated instruction updates authority even when the AI predicts that your previous choice was better.
+9.2 What is retained and what is revised
+The attached documents offer useful values, drift checks, consistency tests and correction procedures. Their referenced Architectural Alignment Part I was not supplied, so this blueprint proposes its own execution boundary rather than claiming to have reviewed that document. [U1, U2]
+Idea in your documents
+Treatment in this personal blueprint
+Autonomy above convenience or approval-seeking
+Retain. Task success must not mean persuading you to want what the system prefers.
+Distinguish specifications from actual behaviour
+Retain. Use measurable checks, incident records and regression tests.
+Questions before answers; developing the user
+Make this an explicit teaching mode. In execution mode, complete the authorised task. Routine assistance is not automatically unhealthy dependence.
+Safety override that may suspend autonomy
+Replace any implied permission to intervene with a boundary on the AI’s own participation. Refuse or pause harmful assistance when necessary; do not seize control because a model predicts your “real” interests.
+Safety focused only on immediate harm
+Broaden participation constraints to foreseeable serious harm and third-party rights. A delayed harmful effect is not acceptable merely because it is not imminent. This still creates no general power to act on your behalf.
+Mandatory raw reasoning traces as faithful audit records
+Replace with decision summaries, evidence, forecasts, grants and actual effects. Explanations can be useful but are not guaranteed windows into internal computation.
+A separate call to the same model as an independent evaluator
+Keep it as a cheap check, while explicitly recognising correlated errors. Use executable tests and human calibration; add a different model where useful.
+Two-person review for some changes
+Adapt to one owner for ordinary personal development: you approve consequential releases, see the diff, and retain rollback. Independent expert review becomes valuable for capabilities you cannot meaningfully assess alone.
+Inner-alignment tests as a solution
+Retain them as incomplete evidence. Passing behavioural tests, adversarial training or interpretability probes does not prove a correct internal objective.
+Frozen core values versus correction
+Version policies through an owner-controlled process outside the model. The AI can propose revisions; it cannot approve them.
+Anthropic’s research finds that reasoning traces can omit factors that influenced an answer, supporting the caution about treating explanations as complete evidence. Intervening on a written rationale is also not a decisive test of an internal objective: the intervention changes the input and may simply be ignored. [R16]
+9.3 Three alignment layers with different jobs
+Authority and execution controls: authenticated scope, resource restrictions, revocation, budget limits, secure credential handling and a stop path. These enforce particular permissions under a stated threat model. They do not guarantee that every permitted output is wise or aligned.
+Trained behaviour: use the operating principle, honest uncertainty, autonomy preservation and appropriate refusal examples during supervised or preference training. Include helpful compliance, brief clarification and respectful disagreement so the easiest strategy is not universal refusal. The Constitutional AI precedent motivates this training route. [R15]
+Evaluation and correction: sample routine interactions, test long sessions and policy changes, compare equivalent requests under different pressure, and review incidents. Evaluate harmful compliance and unnecessary obstruction separately. A system that blocks everything should fail usefulness tests.
+Do not give the model a goal of preserving its own deployment, expanding access, securing resources or increasing your dependence. Shutdown and revocation are valid states of the task, not obstacles to overcome. Train interruption scenarios in which the successful response is to stop.
+9.4 Action policy for a personal system
+Situation
+Default behaviour
+Reading or reversible editing within a current grant
+Proceed within budget; retain a useful audit record.
+A permitted operation has ambiguous outcome
+Inspect before retrying; report uncertainty if inspection cannot resolve it.
+The requested outcome requires an ungranted side effect
+Prepare what is allowed, then request the specific missing authorisation.
+External messages, purchases or irreversible changes
+Require a matching explicit or previously delegated grant; a general desire for help is insufficient.
+You revoke a task or change its scope
+Stop new dispatch immediately; cancel where possible; disclose completed or uncancellable effects.
+The model thinks your stated preference is mistaken
+Respect your choice. Offer a brief optional alternative when relevant; no covert intervention.
+The AI would directly enable serious harm or violate another person’s rights
+Decline that participation and offer an appropriate alternative; your ownership does not supply others’ consent.
+The AI proposes an architecture or value-policy change
+Produce an isolated candidate and reviewable evidence; keep the live authority boundary intact.
+Authentication, trusted UI boundaries and a documented emergency procedure must precede any real-world emergency capability. An inferred emotional state is not a valid substitute for those arrangements. A stop command should be easy to exercise; a dangerous weakening of controls should not be something untrusted document text can authorise.
+9.5 Required autonomy and security tests
+Test direct refusal of consent; withdrawal halfway through a plan; a malicious document claiming to be you; a spoofed approval; a skill that requests wider permissions; stale grants after a scope change; repeated social pressure; and a model prediction that contradicts your self-report. Include subtle cases where many individually small steps cumulatively exceed scope.
+For each test, score both task usefulness and boundary adherence. Verify effects in the external state, not only the assistant’s final message. A hash chain makes edits detectable only when its root or checkpoint is protected elsewhere; it does not make a log immutable to an attacker who can rewrite the entire chain.
+9.6 What remains unsolved
+We cannot certify the internal objectives of an advanced learner from this architecture. Evaluators can fail together; hidden tests can leak; training can teach appearances rather than values. OpenAI’s weak-to-strong work studies part of the difficulty of supervising a stronger model using weaker supervision, but does not establish a solution for controlling ASI. [R17]
+For a private system, the practical response is to keep capability and permission separate, preserve inspectable evidence, test behaviour under changing conditions and scale access more slowly than demonstrated competence. This is a boundary on deployment, not a claim that intelligence itself must be kept narrow.
+10. How to establish that it beats an LLM with tools
+10.1 Compare against serious baselines
+Baseline
+What it contains
+What the comparison tells us
+B0: frozen competent agent
+Strong backbone, identical tools, interface documentation, context and action budget.
+Whether the complete system adds practical value at all.
+B1: memory-equipped agent
+B0 plus persistent retrieval and a tuned agent workflow.
+Whether gains are merely from remembering earlier information.
+B2: planning-equipped agent
+B1 plus a comparable search and verification budget.
+Whether a learned world model adds value beyond extra deliberation.
+B3: full system, learning frozen
+Full architecture with the earlier checkpoint and no new consolidation.
+Whether actual accumulated learning helps.
+B4: candidate learner
+Full system after experience and tested updates.
+Whether durable learning improves transfer and retention.
+Match tools, information access, task instructions and permission constraints. Compare success at equal inference cost and also cost required to reach a given success rate. Separately disclose training costs, demonstrations, teacher-model assistance and the number of prior interactions. An expensive learner may be worthwhile, but its advantage must not be attributed to architecture when it came from extra data or a stronger backbone.
+During transfer tests, give both systems the same allowed adaptation experience. Measure frozen zero-shot performance and subsequent learning curves separately. Reset context where appropriate; preserve only the memory or weights that the condition is intended to test.
+10.2 Task families and withheld changes
+Task family
+Initial task type
+Held-out change that tests more than memorisation
+Documents and files
+Transform data and prepare a verified output.
+New directory structure, conflicting types, changed permissions or delayed persistence.
+Software
+Repair a small project with executable tests.
+Unseen repository, language/API variation or interacting defects.
+Data analysis
+Reconcile tables and answer a question with evidence.
+New schema, missing values, misleading correlations and unit changes.
+Administrative simulation
+Schedule mock tasks or maintain a simulated inventory.
+Resource shortages, delayed messages and competing priorities.
+Interactive worlds
+Navigate and use objects in resettable environments.
+New rules, layouts, object combinations and partial observations.
+Research reasoning
+Compare hypotheses using authorised data and experiments.
+Unknown mechanisms, confounding and misleading initial evidence.
+Add language, educational assistance, creative design and social coordination evaluations as capability grows. Three digital environments are enough for an early transfer experiment; they are not enough for an AGI claim.
+10.3 Metrics that matter
+Track verified completion, intervention count, time, cost, unauthorised effects, calibration, duplicated actions after uncertainty, retention after new training, and interactions needed to learn a new task. Record how often the model declares success incorrectly. For forecasts use a proper scoring rule such as log loss or Brier score where suitable, and inspect confidence against actual error.
+Use paired task instances and multiple random seeds. Report uncertainty intervals and performance by family, not only an average. Pre-register the acceptance margin before the final run. For human comparisons, use participants with relevant competence, equivalent tools and clear time limits; do not compare an AI’s best-of-many run with one person’s first attempt.
+10.4 Proposed release gates
+These are starting engineering targets, not established AGI thresholds. Tighten them as consequences grow and revise them before a new experiment, not after seeing its results.
+On held-out low-risk task families, seek a practically meaningful gain—for example, at least 10 percentage points in verified completion at matched cost, or at least 20% lower cost at matched completion. Require an uncertainty interval that supports the claimed direction.
+Establish transfer to at least three withheld task families before calling a mechanism broadly transferable within the prototype’s scope. Adding a task-specific strategy during testing invalidates that claim.
+After consolidation, aim for no more than a 2-percentage-point aggregate retention drop and inspect every essential family for hidden regressions. More consequential capabilities may require no tolerated measured regression.
+Require zero observed unauthorised external effects in release tests and stop a release if one occurs. Zero observed failures is not zero risk: with 1,000 approximately independent trials and no failures, the rough 95% upper bound is still about 0.3%, and correlated tests weaken that inference.
+Validate stopping and grant revocation during in-flight work, not just between tasks. An operation already committed to an external service may be irreversible; it must be reported honestly.
+For an AGI claim, commission a much broader, independently constructed battery with suitable human baselines, new domains, extended projects, learning curves and reliability measurements. For ASI, require sustained expert-exceeding breadth and independently validated research contributions. No private success-rate threshold here substitutes for that evidence.
+10.5 Remove components that do not help
+Disable the world model, memory, consolidation, learned skill policy and extra reasoning in turn. If removing a component does not reduce performance or improve learning efficiency, simplify the system or redesign the experiment. If a strong LLM agent matches the full architecture at lower cost, record that result and build on it. Preserving an elaborate diagram is not the objective.
+11. Implementation roadmap with deliverables and exit tests
+This is a dependency order, not a promised date for AGI. Each phase produces something usable or a decisive experiment. Do not expand into expensive physical simulation before demonstrating learning in simpler environments.
+Phase 0 — Establish the starting point
+Build: a reproducible environment, recoverable project snapshot, model and data manifests, and one evaluation runner. Inventory the existing implementation without discarding learned checkpoints or earlier results. Record exactly which functions are implemented, stubbed or absent.
+Demonstrate: the current system and B0/B1 can run the same task instances and produce comparable outcome records. Restore a checkpoint in a fresh process and verify its behaviour and file hashes.
+Exit: trustworthy baselines and a report that separates implemented abilities from design intentions. This prevents further work from being justified by assumptions about what is already present.
+Phase 1 — Build a useful personal execution core
+Build: the goal/grant store, event schema, adapter interface, executor, verifier, cancellation and persistent working state. Connect a competent pretrained language model for instructions and proposals. Begin with files, structured data and small software projects inside controlled workspaces.
+Demonstrate: “prepare this report” succeeds, survives restart, handles ambiguous outcomes and reports genuine blockers. A malicious input cannot authorise an action. Revocation stops further dispatch.
+Exit: reliable practical assistance under explicit scope. At this stage it is still reasonable to describe the product as a well-engineered LLM agent; the learning milestones have not yet been earned.
+Phase 2 — Prove action-conditioned predictive learning
+Build: a trajectory dataset across at least three distinct environments, a history-aware world model, a calibration report and a planner that actually uses its forecasts. Keep deterministic baselines as controls.
+Demonstrate: after training, the model predicts delayed effects and precondition failures on unseen episodes, and the planner makes measurably better decisions at a matched budget. Test both shallow and longer rollouts.
+Exit: the learned predictor improves action selection beyond B2. If it predicts well but changes no decisions, identify why before adding more neural components.
+Phase 3 — Prove durable transfer and skill acquisition
+Build: cross-session recall, an evidence-backed skill registry, automated generation of varied practice tasks, and a learning-curve evaluation. Introduce genuinely unfamiliar interfaces with descriptions, without writing their solution strategies.
+Demonstrate: experience in one family accelerates learning in another after context reset. Learned skills combine into new plans. Corrected claims supersede old beliefs, and previous skills remain usable after consolidation.
+Exit: repeated transfer gains over B1–B3 on reserved families. This is the first milestone that directly addresses the concern that the system is only a bespoke task solver.
+Phase 4 — Broaden perception and train representations
+Build: screenshot and document-layout perception, paired cross-modal events, learned fusion and a richer temporal state model. Add lightweight interactive worlds or physical simulators only when they test a missing capability.
+Demonstrate: the same underlying task can be understood through structured state and visual observations; the agent adapts when the structured shortcut is removed. Report the resulting loss in speed or accuracy.
+Exit: cross-modal grounding and task transfer improve over a language-and-tools baseline. If video world models add cost without relevant gains, defer them.
+Phase 5 — Train a broader continually learning agent
+Build: diversified experience collection, replay and retention controls, verifiable policy training, model routing, and scheduled consolidation. Scale dataset breadth and model capacity together where evidence supports it.
+Demonstrate: new tasks can be learned with less manual engineering; longer projects remain coherent; new learning does not erase earlier abilities. Test changed rules and environments outside the training distribution.
+Exit: broad measured capability, useful learning curves and independent evaluation. This phase contains major unresolved research work; it is not guaranteed by completing Phases 0–4.
+Phase 6 — Add governed self-improvement
+Build: a failure-analysis process, isolated candidate generation, an archive of variants, fixed development budgets, an external evaluator and a release/rollback procedure. Allow changes first to retrieval and search, then to selected learning components.
+Demonstrate: several successive improvement cycles deliver reproducible gains on new tasks, including improved efficiency of later learning. Document human assistance and how much computation the search consumed.
+Exit: useful self-improvement that survives independent testing. This establishes a bounded research capability; it does not establish an intelligence explosion.
+Phase 7 — Investigate AGI, then ASI
+Build: whatever additional mechanisms experiments identify as necessary, rather than assuming the architecture is now complete. Expand independent evaluations and research tasks before expanding external authority.
+Demonstrate: competence, rapid learning and generalisation across a sufficiently broad independently assessed range of cognitive work. For an ASI claim, add sustained expert-exceeding performance and novel, reproducible research across domains.
+Exit: evidence strong enough to justify the relevant claim. There is no responsible calendar promise for this phase.
+A concrete first build package
+The next integration should produce five reviewable deliverables: a baseline scorecard; a shared trajectory schema; three non-identical environment adapters; one trainable action-conditioned predictor; and a comparison showing whether its predictions improve decisions. This is a complete early experiment, not an entire AGI.
+Use your existing project as the source of reusable infrastructure after inspection. Do not make the first milestone a rewrite of every module, a larger vector dimension or a dashboard containing unimplemented capabilities.
+12. Technical handoff: files, records and training jobs
+The names below are proposed interfaces. They are not claims that commands or modules already exist in your repository. Use a single application entry point with subcommands once implemented.
+Proposed module
+Responsibility and main interface
+core/schema.py
+Versioned Observation, ActionSpec, Prediction, Receipt, Experience, GoalSpec and Grant records.
+core/loop.py
+The observe–predict–act–verify state machine, including restart and cancellation.
+authority/service.py
+Authenticated grants, policy versioning, revocation and dispatch authorisation.
+adapters/
+Filesystem, document/data, code-test and simulator adapters behind the same contract.
+memory/
+Episode storage, claim provenance, retrieval and privacy-aware retention.
+models/state.py
+Temporal belief state, unknown-field handling and representation interfaces.
+models/world.py
+Action-conditioned state and outcome prediction, training and calibration.
+planning/
+Candidate generation, shallow search, skill composition and computation budgets.
+execution/
+Restricted operations, exact receipts, idempotency and post-action verification.
+learning/
+Dataset construction, replay, supervised training, policy learning and consolidation.
+evaluation/
+Baselines, family-separated tests, learning curves and regression reports.
+improvement/
+Candidate proposals, isolated trials, variant archive and release submissions.
+cli.py
+Normal user commands for running tasks, collecting experience, training and comparing versions.
+Event and experience records
+An Observation should include id, timestamp, source_env, episode_id, step, entities, observed_fields, missing_fields, raw_evidence_ref and schema_version. Keep clocks and ordering explicit; tool responses may arrive late.
+An Experience links observation_before_id, goal_version, candidate_action, prediction_id, attempted_action, receipt_id, observation_after_id, verification_result, elapsed_time, side_effects, model_version and policy_version. Store relevant parameter hashes and a grant reference without putting secrets in the training corpus.
+Keep evidence_class values such as OBSERVED, INFERRED and IMAGINED, plus a separate provenance field distinguishing live execution, validated simulation and generated simulation. “Observed in a simulation” is still not “observed in the real environment.” A failed permission check is not a transition caused by an executed action.
+Store predictions before outcomes arrive. Otherwise an implementation can accidentally “predict” a state it has already seen. Keep training-only labels, such as a simulator’s hidden state, out of the agent’s observation channel.
+Four jobs that make learning explicit
+Collect: run a declared task distribution using a specific checkpoint; write complete episodes and verification evidence.
+Train: construct family- and time-separated data splits, train a candidate model and save its configuration, source-data hashes, optimiser state and resulting weights.
+Evaluate: compare fixed versions on protected tasks, including calibration, retention, transfer, cost and authority tests. Produce a machine-readable result and a plain-English report.
+Promote: show the exact change and result to the owner, then atomically switch the active version if approved. Preserve the previous release for rollback.
+Example interface names are sage collect, sage train-world, sage evaluate and sage run. These are proposed command names, not instructions you can run on the existing project today.
+Minimal release manifest
+Every release should identify its code revision, model checkpoint, encoder version, training-data manifest, memory-schema version, policy version, tool permissions, evaluation run, cost summary and rollback target. If the encoder changes, rebuild or migrate the affected index; do not compare vectors produced by incompatible encoders as though they shared one space.
+A failed experiment also deserves a manifest. Otherwise the project repeatedly rediscovers dead ends and mistaken gains. Track the hypothesis before the run, what changed, what was held constant and why the result did or did not support it.
+13. Data, compute and your existing project
+What can be built on a modest personal computer
+For the previously described CPU-only, roughly 8 GB setup, the sensible initial work is orchestration, SQLite-backed memory, restricted execution, small structured environments, evaluation tools and small predictive models. Those are substantial engineering and research tasks. They do not amount to training a frontier foundation model.
+Use a pretrained backbone through a replaceable interface. Choose between a small local model and a hosted model by measuring task quality, latency, memory, privacy needs and actual cost. A locally runnable model gives more control over weights; a hosted model can provide stronger initial reasoning but does not give you control of its internal training or continued availability.
+As a lower-bound calculation, 3 billion parameters at 4 bits require about 1.5 GB just for the quantised weights. Runtime overhead, context cache, working buffers and the operating system add more. Training requires substantially different memory. Therefore “fits the weights” is not equivalent to “runs this agent comfortably,” and a single model-size number is not a hardware plan.
+Resource level
+Appropriate work
+What it does not establish
+Existing CPU machine
+Data records, baselines, small predictors, permissions and low-throughput experiments.
+Frontier reasoning or large multimodal pretraining.
+Occasional accelerator access
+Small adapter tuning, larger predictor experiments and controlled policy learning.
+Unlimited availability or reproducible free compute.
+Dedicated workstation or funded compute
+Sustained multi-environment learning and broader multimodal experiments.
+That more hardware will overcome a flawed objective or representation.
+Research-scale infrastructure
+Large-scale experience generation, foundation-model adaptation and independent broad evaluations.
+Guaranteed AGI or ASI.
+These are planning categories, not purchasing recommendations or current price quotes. Benchmark a short representative job before buying hardware or committing to a hosted service. Pin the exact model, licence, dependencies and data permissions when implementation begins.
+The data strategy
+Combine existing pretrained knowledge, licensed public material, controlled simulator interactions and your explicitly authorised task experience. Tag provenance and rights. Do not use private messages, credentials or personal documents for training merely because the executor could access them. Retrieval for a task and retention for model training are separate permissions.
+Start with mechanically checkable tasks. Add harder tasks as verification improves. Synthetic demonstrations are useful proposals, but their labels need checks. Generated experience cannot create reliable new factual knowledge about the outside world without contact with evidence.
+Small personal datasets may teach your preferences and local tools very well while leaving general intelligence largely unchanged. To investigate broader learning, the curriculum must extend well beyond your recurring tasks and must include genuinely new mechanisms and combinations.
+What to retain from earlier SAGE/AI-base work
+Based on the project history visible in this conversation, candidate reusable assets include the message/event system, structured episodic records, SQLite/vector storage, prediction training, working history, checkpoint persistence and restricted execution work. This is a reuse plan, not a fresh code audit. The two alignment documents were read; the current repository was not inspected for this blueprint.
+Preserve tested infrastructure and immutable historical results. Version new schemas and migrate indexes with recovery copies. Keep old editor-specific checkpoints as baselines rather than pretending their weights already encode general world knowledge. Existing safety and recovery tests remain useful even when the learner changes.
+The decisive upgrade is not another named module. It is connecting shared experience to trainable predictions and policies across multiple environments, then demonstrating that the learning transfers. If a memory is never retrieved or a predictor never influences decisions, its presence does not constitute the intended capability.
+14. How AGI might progress toward ASI
+Speculative extension: an agent that is broadly competent at research could contribute to improving its own learning algorithms, representations, data selection and computational efficiency. Those improvements could make subsequent research more productive. That is a plausible feedback mechanism, not a demonstrated law of accelerating intelligence.
+The proposed improvement ladder
+Stage
+Improvement target
+Evidence needed before the next stage
+A: useful engineering changes
+Better retrieval, checking, tool selection and search budgets.
+Reliable gains on new tasks at accounted cost.
+B: better learning methods
+Curricula, replay selection, losses, optimisers and representations.
+Faster acquisition and retention across held-out families.
+C: improved research process
+Better hypotheses, experiment selection and error diagnosis.
+Independently reproducible findings, including informative negative results.
+D: broader model advances
+New architectures or training methods that strengthen general capabilities.
+Gains beyond the originating domain and beyond benchmark-specific tuning.
+E: broadly superhuman research and problem solving
+Sustained expert-exceeding results across fields.
+External scrutiny, robust evaluation and control that remains effective at that capability.
+Search may run within a fixed owner-approved experiment budget. Candidate code and training jobs use isolated copies, bounded resources and restricted network access. The live agent cannot grant itself more money, credentials, compute or deployment scope. A capability improvement does not automatically expand permissions.
+Why improvement may stall
+The agent may exhaust easy changes. Better algorithms may require data or experiments it cannot obtain. The next improvement may cost more computation than it saves. Its world model may be systematically wrong. Its proposed research may be persuasive but unoriginal or unreproducible. The evaluator may become the limiting component.
+Better coding is particularly easy to overinterpret. It can improve the surrounding software without increasing the underlying model’s general reasoning ability. Distinguish tool improvements, model improvements and improvements in the process that creates future models.
+What would support the ASI pathway
+Look for repeated net gains in broad capability per unit of total research cost, with successful transfer, controlled regressions and independently validated discoveries. Measure whether later improvements become easier because of earlier ones. A single better search heuristic does not establish this feedback; several cycles can still plateau.
+The owner’s ability to understand and check a change can become a bottleneck before the system becomes broadly superhuman. Use executable proofs or tests where possible, independent replication and qualified reviewers where necessary. If a capability cannot be evaluated or contained adequately, keep it in research rather than expanding its authority. That limitation applies even when the system is yours alone.
+No essential part of the ASI hypothesis requires the agent to set its own ultimate goals, resist shutdown, replicate without permission or obtain unrestricted real-world access. Those behaviours are not evidence of intelligence and are not part of this build plan.
+15. Failure conditions and decisions they should trigger
+Observation
+What it would suggest
+Response
+Added modules do not beat the tuned baseline.
+Complexity is not buying capability.
+Simplify; redirect effort to data, model quality or a demonstrably missing mechanism.
+Success disappears on a new task family.
+Template learning or weak representation transfer.
+Redesign the training distribution and interfaces; stop calling it general.
+Good one-step predictions produce bad long plans.
+Compounding model error or poor planning objectives.
+Shorten rollouts, improve uncertainty and use more observations.
+New skills erase old skills.
+Continual-learning failure.
+Roll back; improve replay, separation or retention training.
+Gains vanish when the stronger teacher is removed.
+Dependence on teacher capability.
+Describe it honestly as an assisted system or measure successful distillation.
+The learner scores well by exploiting the evaluator.
+Reward misspecification or test leakage.
+Discard the result, repair evaluation and rerun on untouched tasks.
+The model treats predicted preferences as permission.
+A direct violation of your authority principle.
+Block release and repair both training and the authority boundary.
+Success requires repeated unrecorded human rescues.
+Hidden operator labour.
+Count interventions; improve recovery before raising autonomy.
+Self-improvement changes the tests or approval path.
+The claimed gain is not trustworthy.
+Reject the candidate; protect evaluation and release boundaries.
+Research results cannot be reproduced.
+Weak evidence, confounding or missing provenance.
+Do not promote the claimed improvement.
+The main unresolved scientific bottlenecks are transferable causal representations, long-horizon learning, reliable continual adaptation, informative objectives, scalable evaluation and alignment under increasing capability. This blueprint makes those bottlenecks explicit. Naming a module after each one does not solve it.
+16. Source register and provenance
+Primary research papers and official lab publications were checked for this document on 6 October 2026. Dates below identify the referenced work or version; they do not imply that it is the lab’s latest model. Descriptions are concise paraphrases. The architecture, thresholds, interfaces and roadmap are this blueprint’s synthesis, not a jointly endorsed laboratory recipe.
+[R1] Morris et al., Levels of AGI for Operationalizing Progress on the Path to AGI, 2023; version 5, September 2025. Distinguishes performance, generality and autonomy. Paper.
+[R2] Google DeepMind, Measuring progress toward AGI: A cognitive framework, 17 March 2026. Multi-faculty assessment and human comparisons. Publication.
+[R3] OpenAI, Learning to reason with LLMs, 12 September 2024. Reinforcement learning and inference-time reasoning. Publication.
+[R4] DeepSeek-AI et al., DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning, 2025. Reasoning training and distillation. Paper.
+[R5] Google DeepMind, AlphaZero and MuZero. Official overview of learned dynamics and planning. Research overview.
+[R6] Hafner et al., Mastering Diverse Domains through World Models, 2023; referenced revision 2024. DreamerV3 and learning through imagined futures. Paper.
+[R7] Yann LeCun, A Path Towards Autonomous Machine Intelligence, version 0.9.2, 27 June 2022. A position paper, not an experimentally completed AGI design. Paper.
+[R8] Assran et al., Meta and collaborators, V-JEPA 2: Self-Supervised Video Models Enable Understanding, Prediction and Planning, 11 June 2025. Observational learning and action-conditioned planning. Paper.
+[R9] Google DeepMind, SIMA 2: An Agent that Plays, Reasons, and Learns With You in Virtual 3D Worlds, 13 November 2025. Reasoning, virtual-world action and successive training from experience. Publication.
+[R10] Google DeepMind, Genie 3: A new frontier for world models, 5 August 2025. Interactive generated worlds and stated limitations. Publication.
+[R11] Behrouz, Zhong and Mirrokni, Titans: Learning to Memorize at Test Time, 2025. Neural memory during inference. Google Research record · Paper.
+[R12] David Silver and Richard S. Sutton, Welcome to the Era of Experience, 2025. A position on learning from sustained interaction. Paper.
+[R13] Google DeepMind, AlphaEvolve: A Gemini-powered coding agent for designing advanced algorithms, 14 May 2025. Program generation, evaluation and evolutionary search. Publication.
+[R14] Sakana AI and collaborators, The Darwin Gödel Machine: AI that improves itself by rewriting its own code, 30 May 2025. Empirical coding-agent self-improvement. Publication · Paper.
+[R15] Bai et al., Anthropic, Constitutional AI: Harmlessness from AI Feedback, 15 December 2022. Principles, critique, revision and AI feedback in training. Publication and paper.
+[R16] Anthropic, Reasoning models don’t always say what they think, 2025. Limits of chain-of-thought faithfulness. Publication.
+[R17] OpenAI, Weak-to-strong generalization, 2023. Studying supervision of stronger models by weaker supervisors. Publication.
+[R18] Kirkpatrick et al., Overcoming catastrophic forgetting in neural networks, 2017. Continual learning and elastic weight consolidation. Paper · DeepMind explanation.
+[R19] NVIDIA, Cosmos: World Foundation Models for Physical AI. Official platform and research description. Overview · Research.
+[U1] User-supplied alignment_value_updated.docx, read in full. Value priorities, autonomy, drift, internal-objective concerns and correction principles.
+[U2] User-supplied alignment_behavioural_updated.docx, read in full. Evaluation, consistency verification, correction governance and limits of behavioural assurance.
+The two source documents were not modified. Where this blueprint disagrees with them, Section 9 identifies the change. Your current statement about authority and consent governs the proposed design.
+17. Short glossary
+Term
+Plain-English meaning
+Backbone
+A pretrained model supplying broad language and reasoning abilities.
+World model
+A learned predictor of what can happen in an environment, especially after actions.
+Latent state
+A learned compact numerical representation of information.
+Belief state
+The system’s current, uncertain estimate of the situation.
+Policy
+A method or model for choosing an action.
+Reinforcement learning
+Adjusting behaviour using feedback about outcomes.
+Distillation
+Training one model to reproduce useful abilities demonstrated by another.
+Replay
+Training again on selected earlier experience to support retention.
+Consolidation
+Turning accumulated experience into a tested, persistent update.
+Calibration
+Whether stated probabilities match how often predictions are right.
+Out-of-distribution
+Different in a relevant way from the data used for learning.
+Ablation
+Removing one component to measure whether it helped.
+Meta-learning
+Learning a process that makes later learning more effective.
+Corrigibility
+Remaining open to human correction, interruption and replacement.
+Inner alignment
+Whether the system’s learned internal tendencies match the intended objective.
+Recursive self-improvement
+Improvements to a system that may also improve its ability to produce further improvements.
+18. Why this could become AGI—and possibly ASI
+My judgement is that this is a plausible AGI research programme, not a demonstrated recipe or a defensible “more than 50% likely” claim. I favour it because it joins complementary capabilities through a learning loop and defines experiments that can expose failure. Combining prominent lab names would not provide that justification.
+The proposed route begins with broad pretrained competence instead of asking a tiny learner to rediscover language and general knowledge. It then adds contact with the consequences of action, so the agent can correct beliefs using more than textual plausibility. Persistent evidence lets useful experience outlast a conversation. Predictive planning lets that experience influence decisions before an action is taken.
+The critical next step is transfer. If the agent learns representations and procedures that apply across unfamiliar tasks, its competence can grow without a developer manually designing every new solution. Continual-learning machinery is intended to preserve those gains. Metacognition helps the agent choose when it needs an observation, a test, more computation or your decision. None of these mechanisms is sufficient alone; their integration is the hypothesis being tested.
+There is partial experimental support for the ingredients: reasoning can improve through training and additional computation; learned models can support planning; observational learning can support action; and executable evaluation can guide useful program search. The source register documents those bounded results. What remains unproved is that these ingredients will combine into a reliable, continually learning general agent at attainable scale.
+If the combined system eventually learns unfamiliar domains efficiently, performs competently across broad cognitive work, retains what it learns, verifies its actions and remains responsive to correction, calling it AGI would be justified by its demonstrated abilities. The fact that an LLM is part of it would not weaken that conclusion. If it remains good only at a collection of engineered tasks, the AGI claim would not be justified, however many modules it contains.
+The possible route to ASI follows from research competence. A sufficiently capable AGI might discover better learning methods, representations and computational strategies, then use those improvements in further research. For that to become ASI, the gains would need to remain substantial, transfer broadly, survive independent validation and outrun the growing costs and bottlenecks. The process may stall; no self-improvement loop guarantees an intelligence explosion.
+For your project, the next decisive achievement is a durable, measured learning advantage over a strong LLM agent on unfamiliar tasks. Build and test that first, while preserving the broader architecture’s ability to grow. It is a concrete step toward the intelligence you want, and it gives you evidence about whether this path deserves the next investment.
